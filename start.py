@@ -1,6 +1,5 @@
 import h5py
 import torch
-from pykeops.torch import LazyTensor
 import matplotlib
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D

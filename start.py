@@ -86,8 +86,10 @@ def sqrtMatrix(matrix):
 def GenerateE():
     E = 0
     for i in range(numOfClass * numOfImagesEachClass):
-        temp = torch.trace(torch.mm(torch.inverse(X[i]), Xhat[i]) + torch.mm(torch.inverse(Xhat[i]), X[i]))
-        E += (1 / 4) * (temp - 4)
+        #temp = torch.trace(torch.mm(torch.inverse(X[i]), Xhat[i]) + torch.mm(torch.inverse(Xhat[i]), X[i]))
+        #E += (1 / 4) * (temp - 4)
+        temp = torch.norm(X[i] - Xhat[i])
+        E += temp
     return E
 
 def ExponentialMap(x, V):

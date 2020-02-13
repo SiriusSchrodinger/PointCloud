@@ -221,6 +221,12 @@ YCNew = C
 YW = torch.sqrt(W)
 YWNew = W
 
+# begin gradient descent
+lambda_ = 0
+YCNew = C
+YW = torch.sqrt(W)
+YWNew = W
+
 while True:
     print("Error of iteration", flag, "is:", E.item())
     EOld = E
@@ -239,6 +245,7 @@ while True:
     for j in range(numOfGaussian):
         YCNew[j] = ExponentialMap(C[j], - etaC * CGrad[j])
         C[j] = ExponentialMap(YCNew[j], gama * LogMap(YCNew[j], C[j]))
+    C = NormalizingC(C)
     Xhat = GenerateXhat()
     E = GenerateE()
     if flag == 50:

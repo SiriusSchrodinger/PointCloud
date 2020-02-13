@@ -22,6 +22,8 @@ etaW = 1e-3
 etaC = 1e-2
 epsilon = 1
 
+dev = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+
 # helper functions
 def ImageChoosing(numEach, numOfClass):
     selectedData = np.zeros((numEach * numOfClass, 256, 4))
@@ -164,7 +166,7 @@ gmm.fit(finalData)
 means = gmm.means_
 covariances = gmm.covariances_
 C = covariances
-C = torch.from_numpy(C)
+C = torch.from_numpy(C).to(dev)
 C.requires_grad_(True)
 C = NormalizingC(C)
 print(C)
@@ -173,7 +175,7 @@ print(C)
 W = np.random.random_sample((numOfClass * numOfImagesEachClass, numOfGaussian))
 
 # normalizing W
-W = torch.from_numpy(W)
+W = torch.from_numpy(W).to(dev)
 temp = NormalizingW(W)
 W = temp
 W.requires_grad_(True)
@@ -204,10 +206,10 @@ flag = 1
 
 # compute X
 X = GenerateX()
-X = torch.from_numpy(X)
+X = torch.from_numpy(X).to(dev)
 
 # compute Xhat
-Xhat = GenerateXhat()
+Xhat = GenerateXhat().to(dev)
 
 # compute objective function E
 E = GenerateE()

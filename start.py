@@ -245,14 +245,13 @@ while True:
     for j in range(numOfGaussian):
         YCNew[j] = ExponentialMap(C[j], - etaC * CGrad[j])
         C[j] = ExponentialMap(YCNew[j], gama * LogMap(YCNew[j], C[j]))
-    C = NormalizingC(C)
-    Xhat = GenerateXhat()
+    C = NormalizingC(C).to(dev)
+    Xhat = GenerateXhat().to(dev)
     E = GenerateE()
     if flag == 50:
         print("The Final Error is:", E.item())
         break
     flag += 1
-
 
 # graph tsne
 graphW = np.random.random_sample((numOfClass * numOfImagesEachClass, numOfGaussian))
